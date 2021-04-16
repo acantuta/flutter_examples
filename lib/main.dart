@@ -1,65 +1,55 @@
 import 'package:flutter/material.dart';
 
-void main() {
+void main(List<String> args) {
   runApp(MaterialApp(
-    title: "My first app",
-    home: TutorialHome(),
+    home: Scaffold(body: Counter()),
   ));
 }
 
-class TutorialHome extends StatelessWidget {
+class Counter extends StatefulWidget {
+  @override
+  _CounterState createState() => _CounterState();
+}
+
+class _CounterState extends State<Counter> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      ++_counter;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          onPressed: () {
-            print("Pressend");
-          },
-          tooltip: "Menu",
-        ),
-        title: Text("Title"),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.search,
-            ),
-            tooltip: "Search",
-          ),
-        ],
-      ),
-      body: Center(
-        child: GestureDetector(
-          onTap: () {
-            print("OnTap Gesture deteected");
-          },
-          onDoubleTap: () {
-            print("double tapp");
-          },
-          onLongPress: () {
-            print("on long press end");
-          },
-          child: Container(
-            height: 100,
-            width: 200,
-            padding: const EdgeInsets.all(8.0),
-            margin: const EdgeInsets.symmetric(horizontal: 8.0),
-            decoration: BoxDecoration(
-              color: Colors.lightGreen,
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            child: Align(
-                alignment: Alignment.bottomCenter, child: Text("The text")),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          print("Floating action pressed");
-        },
-      ),
-    );
+    return Row(children: [
+      CounterIncrementor(onPressed: _increment,),
+      CounterDisplay(count: _counter,),
+    ],);
   }
+}
+
+class CounterDisplay extends StatelessWidget {
+  CounterDisplay({this.count});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Count: $count');
+  }
+}
+
+class CounterIncrementor extends StatelessWidget {
+
+  CounterIncrementor({this.onPressed});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(onPressed: onPressed, child: Text("Increment"),);
+  }
+
+
 }
