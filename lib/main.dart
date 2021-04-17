@@ -12,14 +12,18 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Flutter layout demo",
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("The title"),
+    return Container(
+      decoration: BoxDecoration(color: Colors.white),
+      child: Center(
+        child: Text(
+          "Hello World",
+          textDirection: TextDirection.ltr,
+          style: TextStyle(
+            fontSize: 32,
+            color: Colors.black87
+          ),
         ),
-        body: Center(child: Text("Hello World"),),
-      )
+      ),
     );
   }
 }
