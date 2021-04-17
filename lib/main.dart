@@ -12,16 +12,29 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.white),
-      child: Center(
-        child: Text(
-          "Hello World",
-          textDirection: TextDirection.ltr,
-          style: TextStyle(
-            fontSize: 32,
-            color: Colors.black87
-          ),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(),
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(color: Colors.lightGreen),
+              child: Center(
+                child: Text("2"),
+              ),
+            ),
+            Expanded(
+                flex: 2,
+                child: Container(
+              height: 200,
+              decoration: BoxDecoration(color: Colors.amber),
+              child: Center(child: Text("1")),
+            )),
+            Expanded(child: Image.asset("lib/assets/1.png"), flex: 1,),
+          ],
         ),
       ),
     );
