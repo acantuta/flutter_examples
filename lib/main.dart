@@ -2,32 +2,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text("The title"),
-      ),
-      body: ListView(
-        children: [
-          _tile("jjijiji 1 ", Icons.ac_unit),
-          _tile("jjijiji 2 ", Icons.star),
-          _tile("jjijiji 3 ", Icons.motorcycle),
-        ],
-      ),
-    ),
-  ));
+  runApp(MyApp());
 }
 
-ListTile _tile(String title, IconData icon) => ListTile(
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
           title: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
+            "A title1111",
+          ),
+        ),
+        body: Stack(
+          alignment: Alignment(0.6, 0.6),
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage('images/pic1.jpg'),
+              radius: 200,
             ),
-          ),
-          leading: Icon(
-            icon,
-            color: Colors.blue,
-          ),
-        );
-
+            Container(
+              decoration: BoxDecoration(color: Colors.black38),
+              child: Text(
+                "MIla B.",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
