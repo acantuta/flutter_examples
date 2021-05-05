@@ -15,26 +15,29 @@ class MyApp extends StatelessWidget {
             "A title1111",
           ),
         ),
-        body: Stack(
-          alignment: Alignment(0.6, 0.6),
-          children: [
-            CircleAvatar(
-              backgroundImage: AssetImage('images/pic1.jpg'),
-              radius: 200,
-            ),
-            Container(
-              decoration: BoxDecoration(color: Colors.black38),
-              child: Text(
-                "MIla B.",
-                style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-          ],
+        body: Container(
+          width: double.infinity,
+          child: Card(
+            child: Column(children: [
+              buildListTile(Icons.access_alarm, "A title", "A title2"),
+              Divider(),
+              buildListTile(Icons.accessibility_new, "A title", "A title2"),
+              Divider(),
+            ]),
+          ),
         ),
       ),
     );
+  }
+
+  ListTile buildListTile(IconData icon, String title, String subtitle) {
+    return ListTile(
+        leading: Icon(
+          Icons.ac_unit,
+          color: Colors.blue,
+          size: 50,
+        ),
+        title: Text(title),
+        subtitle: Text(subtitle));
   }
 }
