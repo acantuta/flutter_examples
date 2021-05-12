@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
     Widget imageSection = Image.asset(
       "images/pic0.jpg",
       width: double.infinity,
-      height: 400,
+      height: 200,
       fit: BoxFit.cover,
     );
 
@@ -40,8 +40,7 @@ class MyApp extends StatelessWidget {
               ],
             ),
           ),
-          Icon(Icons.star, color: Colors.red,),
-          Text("41")
+          FavoriteWidget(),
         ],
       ),
     );
@@ -109,5 +108,44 @@ class MyApp extends StatelessWidget {
             ))
       ],
     );
+  }
+}
+
+class FavoriteWidget extends StatefulWidget {
+  const FavoriteWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _FavoriteWidgetState createState() => _FavoriteWidgetState();
+}
+
+class _FavoriteWidgetState extends State<FavoriteWidget> {
+  bool _isFavorited = true;
+  int _favoriteCount = 40;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+        children: [
+      IconButton(
+        icon: _isFavorited ? Icon(Icons.star) : Icon(Icons.star_border),
+        color: Colors.red,
+        onPressed: _toggleFavorite,
+      ),
+      Text('${_favoriteCount}')
+    ]);
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      if (_isFavorited) {
+        _favoriteCount--;
+      } else {
+        _favoriteCount++;
+      }
+      _isFavorited = !_isFavorited;
+    });
   }
 }
