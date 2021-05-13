@@ -77,7 +77,7 @@ class _ParentWidgetState extends State<ParentWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: TapboxB(
+      child: TapboxC(
         active: _active,
         onChanged: _handleTapboxChanged,
       ),
@@ -113,4 +113,66 @@ class TapboxB extends StatelessWidget {
       ),
     );
   }
+}
+
+class TapboxC extends StatefulWidget {
+  final bool active;
+  final ValueChanged<bool> onChanged;
+
+  TapboxC({Key key, this.active: false, @required this.onChanged})
+      : super(key: key);
+
+  @override
+  _TapboxCState createState() => _TapboxCState();
+}
+
+class _TapboxCState extends State<TapboxC> {
+  bool _highlight = false;
+
+  void _handleTap() {
+    widget.onChanged(!widget.active);
+  }
+
+  void _handleTapDown (TapDownDetails details)
+  {
+    setState(() {
+      _highlight = true;
+    });
+  }
+
+  void _handleTapUp (TapUpDetails details)
+  {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  void _handleTapCancel() {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: _handleTapDown,
+      onTapUp: _handleTapUp,
+      onTap: _handleTap,
+      onTapCancel: _handleTapCancel,
+      child: Container(
+        width: 200,
+        height: 200,
+        child: Center(
+            child: Text(
+          widget.active ? "Active_" : "Inactive_",
+        )),
+        decoration: BoxDecoration(
+          color: widget.active ? Colors.green : Colors.grey,
+          border: _highlight ? Border.all(color: Colors.teal[700], width: 10.00) : null
+        ),
+      ),
+    );
+  }
+
 }
