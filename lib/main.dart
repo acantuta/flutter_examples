@@ -12,58 +12,80 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: HomeScreen(),
     );
   }
 }
 
-class Todo {
-  final String title;
-  final String body;
-
-  Todo(this.title, this.body);
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    List<Todo> list = List.generate(
-        20, (index) => Todo("The title $index", "The description $index"));
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Todos"),
-      ),
-      body: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => DetailScreen(todo: list[index])));
-              },
-              title: Center(child: Text(list[index].title)),
-            );
-          }),
-    );
-  }
-}
-
-class DetailScreen extends StatelessWidget {
-  final Todo todo;
-
-  const DetailScreen({Key key, @required this.todo}) : super(key: key);
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(this.todo.title),
+        title: Text("Returning  Data Demo"),
       ),
-      body: Center(child: Text(this.todo.body)),
+      body: Center(
+        child: Container(
+          child: MyButton(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyButton extends StatelessWidget {
+  const MyButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      onPressed: () {
+        _navigateAndDisplaySelection(context);
+      },
+      child: Text("Pick an option, any option"),
+    );
+  }
+
+  void _navigateAndDisplaySelection(BuildContext context) async {
+    var result = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => SelectionScreen()));
+
+    Scaffold.of(context)
+      ..removeCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text("$result")));
+  }
+}
+
+class SelectionScreen extends StatelessWidget {
+  const SelectionScreen({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Scaffold(
+        body: Center(
+            child: Container(
+                width: 100,
+                height: 200,
+                child: ListView(
+                  children: [
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context, "Yep!");
+                      },
+                      child: Text("Yep!"),
+                    ),
+                    RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context, "Nope.");
+                      },
+                      child: Text("Nope"),
+                    ),
+                  ],
+                ))),
+      ),
     );
   }
 }
