@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomeScreen(),
+      routes: {
+        '/': (context) => HomeScreen(),
+        '/secondScreen': (context) => SelectionScreen()
+      }
     );
   }
 }
@@ -49,8 +52,9 @@ class MyButton extends StatelessWidget {
   }
 
   void _navigateAndDisplaySelection(BuildContext context) async {
-    var result = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => SelectionScreen()));
+    var result = await Navigator.pushNamed(
+        context, '/secondScreen'
+    );
 
     Scaffold.of(context)
       ..removeCurrentSnackBar()
