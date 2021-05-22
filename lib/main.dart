@@ -11,12 +11,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      routes: {
-        '/': (context) => HomeScreen(),
-        '/secondScreen': (context) => SelectionScreen()
-      }
-    );
+    return MaterialApp(routes: {
+      '/': (context) => HomeScreen(),
+      '/secondScreen': (context) => SelectionScreen()
+    });
   }
 }
 
@@ -31,30 +29,30 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: MyButton(),
+          child: MyImage(),
         ),
       ),
     );
   }
 }
 
-class MyButton extends StatelessWidget {
-  const MyButton({Key key}) : super(key: key);
+class MyImage extends StatelessWidget {
+  const MyImage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      onPressed: () {
-        _navigateAndDisplaySelection(context);
-      },
-      child: Text("Pick an option, any option"),
-    );
+    return GestureDetector(
+        onTap: () {
+          _navigateAndDisplaySelection(context);
+        },
+        child: Hero(
+          tag: 'imageHero',
+          child: Image.network('https://picsum.photos/250?image=9'),
+        ));
   }
 
   void _navigateAndDisplaySelection(BuildContext context) async {
-    var result = await Navigator.pushNamed(
-        context, '/secondScreen'
-    );
+    var result = await Navigator.pushNamed(context, '/secondScreen');
 
     Scaffold.of(context)
       ..removeCurrentSnackBar()
@@ -69,26 +67,18 @@ class SelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Scaffold(
-        body: Center(
-            child: Container(
-                width: 100,
-                height: 200,
-                child: ListView(
-                  children: [
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pop(context, "Yep!");
-                      },
-                      child: Text("Yep!"),
-                    ),
-                    RaisedButton(
-                      onPressed: () {
-                        Navigator.pop(context, "Nope.");
-                      },
-                      child: Text("Nope"),
-                    ),
-                  ],
-                ))),
+        appBar: AppBar(title: Text("Details")),
+        body: Row(
+          children: [
+            Hero(
+              tag: 'imageHero',
+              child: Image.network(
+                'https://picsum.photos/250?image=9',
+                width: 300,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
